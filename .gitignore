@@ -1,0 +1,7 @@
+.vs/
+IntegrationTests/bin/
+IntegrationTests/obj/
+WebApplication1.Api/bin/
+WebApplication1.Api/obj/
+WebApplication1.DataAccess/bin/
+WebApplication1.DataAccess/obj/
