@@ -43,7 +43,7 @@ namespace IntegrationTests.Scenarios
         public async Task InsertEmployee_WhenEmployeeNameNotExists_ReturnsCreatedResult()
         {
             //Arrange
-            var employeeName = "name 02";
+            var employeeName = "name_" + Guid.NewGuid();
             var sc = new StringContent(
                     JsonConvert.SerializeObject(new Employee { Name = employeeName })
                     , Encoding.UTF8
