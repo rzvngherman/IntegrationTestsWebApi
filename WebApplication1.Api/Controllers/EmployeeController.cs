@@ -50,8 +50,8 @@ namespace WebApplication1.Api.Controllers
                 {
                     id = employeeId,
                 });
-
-            return Created(uri, new { value.Name });
+            var abc = "gugu" + value.Name;
+            return Created(uri, new { abc });
         }
     }
 }

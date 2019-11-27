@@ -5,3 +5,5 @@ WebApplication1.Api/bin/
 WebApplication1.Api/obj/
 WebApplication1.DataAccess/bin/
 WebApplication1.DataAccess/obj/
+WebApplication1.Api/WebApplication1.Api.csproj.user
+WebApplication1.Api/Properties/PublishProfiles/

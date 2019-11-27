@@ -28,6 +28,7 @@ namespace WebApplication1.Data.service
 
         public int Insert(string name)
         {
+            //_unitOfWork.co
             var found = _unitOfWork.EmployeeRepository.GetByName(name);
             if(found != null)
                 throw new ArgumentException("Employee already exists");

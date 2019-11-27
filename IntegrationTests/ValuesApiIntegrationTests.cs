@@ -9,11 +9,11 @@ using Xunit;
 
 namespace IntegrationTests
 {
-    public class ValuesApiIntegrationTests : IClassFixture<WebApplicationFactory>
+    public class ValuesApiIntegrationTests : IClassFixture<WebApplicationFactory_old>
     {
-        private readonly WebApplicationFactory _factory;
+        private readonly WebApplicationFactory_old _factory;
 
-        public ValuesApiIntegrationTests(WebApplicationFactory factory)
+        public ValuesApiIntegrationTests(WebApplicationFactory_old factory)
         {
             _factory = factory;
         }

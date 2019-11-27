@@ -10,7 +10,7 @@ namespace WebApplication1.Data.dataaccess
 
         public SomeDbContext(DbContextOptions<SomeDbContext> options) : base(options)
         {
-
+            
         }
 
         public SomeDbContext(DbContextOptions<SomeDbContext> options, bool isMock = false)

@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="old\Fixture\2\**" />
+    <Compile Remove="old\Fixture\3\**" />
+    <EmbeddedResource Remove="old\Fixture\2\**" />
+    <EmbeddedResource Remove="old\Fixture\3\**" />
+    <None Remove="old\Fixture\2\**" />
+    <None Remove="old\Fixture\3\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
