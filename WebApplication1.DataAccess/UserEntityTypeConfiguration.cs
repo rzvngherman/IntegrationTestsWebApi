@@ -17,4 +17,17 @@ namespace WebApplication1.DataAccess
                 .IsRequired();            
         }
     }
+
+    public class AttachmentEntityTypeConfiguration : IEntityTypeConfiguration<Attachment>
+    {
+        public void Configure(EntityTypeBuilder<Attachment> builder)
+        {
+            builder.ToTable("02_ImageContents");
+
+            builder.HasKey(u => u.Id);
+
+            builder.Property(u => u.ImageContent).HasColumnName("image_content")
+                .IsRequired();
+        }
+    }
 }

@@ -78,4 +78,11 @@ namespace WebApplication1.Data.domain
             Name = name;
         }
     }
+
+    public class Attachment
+    {
+        //[Key]
+        public int Id { get; set; }
+        public byte[] ImageContent { get; set; }
+    }
 }

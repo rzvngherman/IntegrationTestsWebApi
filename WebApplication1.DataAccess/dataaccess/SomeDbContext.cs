@@ -7,6 +7,7 @@ namespace WebApplication1.Data.dataaccess
     public class SomeDbContext : DbContext
     {
         public virtual DbSet<domain.Employee> Employees { get; set; }
+        public virtual DbSet<domain.Attachment> Attachments { get; set; }
 
         public SomeDbContext(DbContextOptions<SomeDbContext> options) : base(options)
         {
@@ -26,6 +27,7 @@ namespace WebApplication1.Data.dataaccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new EmployeeEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new AttachmentEntityTypeConfiguration());
         }
     }
 }
