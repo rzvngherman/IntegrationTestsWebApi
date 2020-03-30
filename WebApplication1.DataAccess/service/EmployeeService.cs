@@ -9,6 +9,7 @@ namespace WebApplication1.Data.service
     {
         string GetNameById(int id);
         int Insert(string name);
+        int TestTransaction(string name);
     }
 
     public class EmployeeService : IEmployeeService
@@ -34,6 +35,16 @@ namespace WebApplication1.Data.service
                 throw new ArgumentException("Employee already exists");
 
             var result = _unitOfWork.EmployeeRepository.Insert(name);
+            _unitOfWork.Complete();
+            return result.Id;
+        }
+
+        public int TestTransaction(string name)
+        {           
+            var result = _unitOfWork.EmployeeRepository.Insert(name);
+            var result2 = _unitOfWork.AttachmentRepository.Insert();
+            var result3 = _unitOfWork.AttachmentRepository.InsertFail();
+
             _unitOfWork.Complete();
             return result.Id;
         }

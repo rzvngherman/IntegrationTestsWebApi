@@ -10,6 +10,7 @@ namespace WebApplication1.Data.domain
     public interface IUnitOfWork
     {
         IEmployeeRepository EmployeeRepository { get; }
+        IAttachmentRepository AttachmentRepository { get; }
 
         int Complete();
         Task<int> CompleteAsync();
@@ -84,5 +85,52 @@ namespace WebApplication1.Data.domain
         //[Key]
         public int Id { get; set; }
         public byte[] ImageContent { get; set; }
+
+        private Attachment()
+        {
+        }
+
+        public Attachment(byte[] content)
+        {
+            ImageContent = content;
+        }
+
+        public Attachment(int id, byte[] content)
+        {
+            Id = id;
+            ImageContent = content;
+        }
+    }
+
+    public interface IAttachmentRepository
+    {
+        Attachment Insert();
+        Attachment InsertFail();
+    }
+
+    public class AttachmentRepository : IAttachmentRepository
+    {
+        private readonly DbContext _context;
+
+        public AttachmentRepository(DbContext context)
+        {
+            _context = context;
+        }
+
+        public Attachment Insert()
+        {
+            var attachment = new Attachment(new byte[] { 22, 34 });
+            _context.Add(attachment);
+
+            return attachment;
+        }
+
+        public Attachment InsertFail()
+        {
+            var attachment = new Attachment(1, new byte[] { 22, 34 });
+            _context.Add(attachment);
+
+            return attachment;
+        }
     }
 }

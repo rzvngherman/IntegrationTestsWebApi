@@ -14,10 +14,11 @@ namespace WebApplication1.Data.dataaccess
         {
             _context = context;
             EmployeeRepository = new EmployeeRepository(context);
+            AttachmentRepository = new AttachmentRepository(context);
         }
 
         public IEmployeeRepository EmployeeRepository { get; }
-
+        public IAttachmentRepository AttachmentRepository { get; }
 
         public int Complete()
         {

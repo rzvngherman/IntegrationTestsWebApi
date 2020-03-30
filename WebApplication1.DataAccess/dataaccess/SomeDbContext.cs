@@ -11,7 +11,12 @@ namespace WebApplication1.Data.dataaccess
 
         public SomeDbContext(DbContextOptions<SomeDbContext> options) : base(options)
         {
-            
+            var isMock = false;
+            if (isMock)
+            {
+                Database.EnsureDeleted();
+                Database.EnsureCreated();
+            }
         }
 
         public SomeDbContext(DbContextOptions<SomeDbContext> options, bool isMock = false)

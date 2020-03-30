@@ -60,10 +60,7 @@ namespace WebApplication1.Api.Controllers
         {
             var result = await GetFromPathById(id);
             var okResult = (result as OkObjectResult).Value as byte[];
-            var attachment = new Attachment
-            {
-                ImageContent = okResult
-            };
+            var attachment = new Attachment(okResult);
             _context.Attachments.Add(attachment);
             await _context.SaveChangesAsync();
             return Created("", new { id = attachment.Id });
@@ -108,10 +105,7 @@ namespace WebApplication1.Api.Controllers
         {
             //string path = Path.Combine(_env.WebRootPath,"images", attachmentvm.FileName);
             byte[] bytes = Convert.FromBase64String(attachmentvm.File);
-            var attachment = new Attachment
-            {
-                ImageContent = bytes,
-            };
+            var attachment = new Attachment(bytes);
             _context.Attachments.Add(attachment);
             await _context.SaveChangesAsync();
             return Created("", new { id = attachment.Id });
