@@ -15,11 +15,9 @@ var target = Argument("target", "Default");
 ///////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES
 ///////////////////////////////////////////////////////////////////////////////
-var publishFolder = "./publish";
 var slnPath = "WebApplicationIntegrationTesting.sln";
 var temporaryFolder = "./temp";
-
-
+var publishFolder = "./publish";
 
 
 //////////////////////////////////////////////////////////////////////
@@ -93,8 +91,7 @@ Task("Clean")
 {
 	CleanDirectories(publishFolder);
 	CleanDirectories(temporaryFolder);
-	CleanDirectories(".sonarqube");
-
+	
 	var directories = GetDirectories("./*");
 	foreach(var directory in directories)
 	{
@@ -131,8 +128,7 @@ public string GetVersionWithBuildNumber(string assemblyPath, string buildNumber)
 //////////////////////////////////////////////////////////////////////
 Task("Default")
 	.IsDependentOn("Unit-Tests")
-	.IsDependentOn("Publish-WebApplication1.Api")
-	//.IsDependentOn("Publish-WebApplication1.ApiMsi")
+	.IsDependentOn("Publish-WebApplication1.Api")	
 	.Does(() =>
 {
 	
