@@ -8,3 +8,7 @@ WebApplication1.DataAccess/obj/
 WebApplication1.Api/WebApplication1.Api.csproj.user
 WebApplication1.Api/Properties/PublishProfiles/
 IntegrationTests/published/
+tools/
+publish/
+WebApplication1.Api/published-app/
+WebApplication1.Tests/obj/

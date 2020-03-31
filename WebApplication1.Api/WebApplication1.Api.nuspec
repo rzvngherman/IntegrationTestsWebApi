@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>WebApplication1.Api</id>
+        <version>1.0.0</version>
+        <authors>Razvan G.</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Web Application used for integration testing</description>
+    </metadata>
+    <files>
+        <file src="published-app\**\*.*" target="content" />
+    </files>
+</package>
