@@ -15,7 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items", "Items", "{5F8ECABE
 		build.ps1 = build.ps1
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication.UnitTests", "WebApplication.UnitTests\WebApplication.UnitTests.csproj", "{65CF5CC0-4871-4B40-AB97-6C2364F5EC8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication.UnitTests", "WebApplication.UnitTests\WebApplication.UnitTests.csproj", "{65CF5CC0-4871-4B40-AB97-6C2364F5EC8C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test-cake", "test-cake", "{87E6C1D5-582A-4F3C-B228-D21943BC3287}"
+	ProjectSection(SolutionItems) = preProject
+		test.build.cake = test.build.cake
+		test.ps1 = test.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +48,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{87E6C1D5-582A-4F3C-B228-D21943BC3287} = {5F8ECABE-E43D-43E9-B0FB-7EA6F81690CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {725E69BD-C67E-42F1-A5F6-6772F6A955E8}
