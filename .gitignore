@@ -12,3 +12,5 @@ tools/
 publish/
 WebApplication1.Api/published-app/
 WebApplication1.Tests/obj/
+WebApplication.UnitTests/bin/
+WebApplication.UnitTests/obj/

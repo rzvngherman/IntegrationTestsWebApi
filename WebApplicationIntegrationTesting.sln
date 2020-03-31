@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items", "Items", "{5F8ECABE
 		build.ps1 = build.ps1
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication.UnitTests", "WebApplication.UnitTests\WebApplication.UnitTests.csproj", "{65CF5CC0-4871-4B40-AB97-6C2364F5EC8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0BE25F41-6C40-4BA4-BE34-6BB3333A984F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BE25F41-6C40-4BA4-BE34-6BB3333A984F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BE25F41-6C40-4BA4-BE34-6BB3333A984F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65CF5CC0-4871-4B40-AB97-6C2364F5EC8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65CF5CC0-4871-4B40-AB97-6C2364F5EC8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65CF5CC0-4871-4B40-AB97-6C2364F5EC8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65CF5CC0-4871-4B40-AB97-6C2364F5EC8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

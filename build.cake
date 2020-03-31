@@ -49,7 +49,7 @@ Task("Publish-WebApplication1.Api")
 });
 
 
-task("unit-tests")
+Task("Unit-Tests")
 	.IsDependentOn("Build")
 	.Does(() => 
 {
@@ -59,7 +59,7 @@ task("unit-tests")
 		 NoBuild = true
      };
 
-     var projectFiles = GetFiles("./**/*.Tests.csproj");
+     var projectFiles = GetFiles("./**/*.UnitTests.csproj");
      foreach(var file in projectFiles)
      {
          DotNetCoreTest(file.FullPath, settings);
@@ -130,9 +130,9 @@ public string GetVersionWithBuildNumber(string assemblyPath, string buildNumber)
 // TASKS
 //////////////////////////////////////////////////////////////////////
 Task("Default")
-	//.IsDependentOn("Unit-Tests")
+	.IsDependentOn("Unit-Tests")
 	.IsDependentOn("Publish-WebApplication1.Api")
-	//.IsDependentOn("Publish-IMSPA.APIMsi")
+	//.IsDependentOn("Publish-WebApplication1.ApiMsi")
 	.Does(() =>
 {
 	
