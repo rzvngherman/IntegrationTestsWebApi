@@ -11,6 +11,7 @@ namespace IntegrationTests
     public class IntegrationTestHelper
     {
         public HttpClient Client { get; private set; }
+        public EnvironmentConstants EnvironmentConstant { get; private set; }
 
         public IntegrationTestHelper()
         {
@@ -22,13 +23,17 @@ namespace IntegrationTests
             //var a1 = configuration.GetConnectionString("smap_IT_database");
             bool.TryParse(configuration.GetSection("AppSettings:UseRemote").Value, out bool useRemote);
             if (!useRemote)
+            {
                 CreateClient<WebApplication1.Api.Startup>();
+                EnvironmentConstant = EnvironmentConstants.Local;
+            }
             else
             {
                 var remoteServerAddress = configuration
                     .GetSection("AppSettings:RemoteServerAddress")
                     .Value;
                 CreateClient(remoteServerAddress);
+                EnvironmentConstant = EnvironmentConstants.Remote;
             }
         }
 
@@ -50,5 +55,18 @@ namespace IntegrationTests
             var server = new Microsoft.AspNetCore.TestHost.TestServer(builder);
             Client = server.CreateClient();
         }
+    }
+
+    public sealed class EnvironmentConstants
+    {
+        public static readonly EnvironmentConstants Remote = new EnvironmentConstants("[\"WebApplication1.Api value1\",\"WebApplication1.Api value2\"]");
+        public static readonly EnvironmentConstants Local = new EnvironmentConstants("[\"local api.WebApplication1.Api value1\",\"local api.WebApplication1.Api value2\"]");
+
+        private EnvironmentConstants(string getApiValuesConstant)
+        {
+            GET_API_VALUES_CONSTANT = getApiValuesConstant;
+        }
+
+        public string GET_API_VALUES_CONSTANT { get; private set; }
     }
 }

@@ -47,7 +47,7 @@ Task("Publish-WebApplication1.Api")
 });
 
 
-Task("Unit-Tests")
+Task("Run-Unit-Tests")
 	.IsDependentOn("Build")
 	.Does(() => 
 {
@@ -57,9 +57,28 @@ Task("Unit-Tests")
 		 NoBuild = true
      };
 
+     Information("UnitTests");
      var projectFiles = GetFiles("./**/*.UnitTests.csproj");
      foreach(var file in projectFiles)
      {
+         DotNetCoreTest(file.FullPath, settings);
+     }
+});
+
+Task("Run-Integration-Tests")
+	.IsDependentOn("Build")
+	.Does(() => 
+{
+     var settings = new DotNetCoreTestSettings
+     {
+         Configuration = configuration,
+		 NoBuild = true
+     };
+
+     Information("IntegrationTests");
+     var projectFiles = GetFiles("./**/IntegrationTests.csproj");	 
+     foreach(var file in projectFiles)
+     {		 
          DotNetCoreTest(file.FullPath, settings);
      }
 });
@@ -127,7 +146,8 @@ public string GetVersionWithBuildNumber(string assemblyPath, string buildNumber)
 // TASKS
 //////////////////////////////////////////////////////////////////////
 Task("Default")
-	.IsDependentOn("Unit-Tests")
+	.IsDependentOn("Run-Integration-Tests")
+	.IsDependentOn("Run-Unit-Tests")
 	.IsDependentOn("Publish-WebApplication1.Api")	
 	.Does(() =>
 {
