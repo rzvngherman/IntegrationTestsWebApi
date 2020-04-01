@@ -26,7 +26,8 @@ var publishFolder = "./publish";
 
 ///define all tasks
 Task("Publish-WebApplication1.Api")
-	.IsDependentOn("Build")
+	//.IsDependentOn("Build")
+	.IsDependentOn("Run-Unit-Tests")
 	.Does(() =>
 {	
     var settings = new DotNetCorePublishSettings
@@ -66,7 +67,8 @@ Task("Run-Unit-Tests")
 });
 
 Task("Run-Integration-Tests")
-	.IsDependentOn("Build")
+	//.IsDependentOn("Build")
+	.IsDependentOn("Publish-WebApplication1.Api")
 	.Does(() => 
 {
      var settings = new DotNetCoreTestSettings
@@ -147,8 +149,8 @@ public string GetVersionWithBuildNumber(string assemblyPath, string buildNumber)
 //////////////////////////////////////////////////////////////////////
 Task("Default")
 	.IsDependentOn("Run-Integration-Tests")
-	.IsDependentOn("Run-Unit-Tests")
-	.IsDependentOn("Publish-WebApplication1.Api")	
+	//.IsDependentOn("Run-Unit-Tests")
+	//.IsDependentOn("Publish-WebApplication1.Api")	
 	.Does(() =>
 {
 	
