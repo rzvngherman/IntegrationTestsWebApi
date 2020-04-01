@@ -23,67 +23,7 @@ var publishFolder = "./publish";
 //////////////////////////////////////////////////////////////////////
 // TASKS
 //////////////////////////////////////////////////////////////////////
-
 ///define all tasks
-Task("Publish-WebApplication1.Api")
-	//.IsDependentOn("Build")
-	.IsDependentOn("Run-Unit-Tests")
-	.Does(() =>
-{	
-    var settings = new DotNetCorePublishSettings
-    {
-        Configuration = "Release",
-        OutputDirectory = "./WebApplication1.Api/published-app/"
-    };
-    DotNetCorePublish("./WebApplication1.Api/WebApplication1.Api.csproj", settings);
-
-	var version = GetVersionWithBuildNumber("./WebApplication1.Api/published-app/WebApplication1.Api.dll", buildNumber);
-
-	var nuGetPackSettings = new NuGetPackSettings {
-		OutputDirectory = publishFolder,
-		Suffix = versionSuffix,
-		Version = version
-	};
-	NuGetPack("./WebApplication1.Api/WebApplication1.Api.nuspec", nuGetPackSettings);
-});
-
-
-Task("Run-Unit-Tests")
-	.IsDependentOn("Build")
-	.Does(() => 
-{
-     var settings = new DotNetCoreTestSettings
-     {
-         Configuration = configuration,
-		 NoBuild = true
-     };
-
-     Information("UnitTests");
-     var projectFiles = GetFiles("./**/*.UnitTests.csproj");
-     foreach(var file in projectFiles)
-     {
-         DotNetCoreTest(file.FullPath, settings);
-     }
-});
-
-Task("Run-Integration-Tests")
-	//.IsDependentOn("Build")
-	.IsDependentOn("Publish-WebApplication1.Api")
-	.Does(() => 
-{
-     var settings = new DotNetCoreTestSettings
-     {
-         Configuration = configuration,
-		 NoBuild = true
-     };
-
-     Information("IntegrationTests");
-     var projectFiles = GetFiles("./**/IntegrationTests.csproj");	 
-     foreach(var file in projectFiles)
-     {		 
-         DotNetCoreTest(file.FullPath, settings);
-     }
-});
 
 Task("Build")
 	.IsDependentOn("clean")
@@ -125,6 +65,63 @@ Task("Clean")
 	}
 });
 
+Task("Run-Unit-Tests")
+	.IsDependentOn("Build")
+	.Does(() => 
+{
+     var settings = new DotNetCoreTestSettings
+     {
+         Configuration = configuration,
+		 NoBuild = true
+     };
+
+     Information("UnitTests");
+     var projectFiles = GetFiles("./**/*.UnitTests.csproj");
+     foreach(var file in projectFiles)
+     {
+         DotNetCoreTest(file.FullPath, settings);
+     }
+});
+
+Task("Publish-WebApplication1.Api")	
+	.IsDependentOn("Run-Unit-Tests")
+	.Does(() =>
+{	
+    var settings = new DotNetCorePublishSettings
+    {
+        Configuration = "Release",
+        OutputDirectory = "./WebApplication1.Api/published-app/"
+    };
+    DotNetCorePublish("./WebApplication1.Api/WebApplication1.Api.csproj", settings);
+
+	var version = GetVersionWithBuildNumber("./WebApplication1.Api/published-app/WebApplication1.Api.dll", buildNumber);
+
+	var nuGetPackSettings = new NuGetPackSettings {
+		OutputDirectory = publishFolder,
+		Suffix = versionSuffix,
+		Version = version
+	};
+	NuGetPack("./WebApplication1.Api/WebApplication1.Api.nuspec", nuGetPackSettings);
+});
+
+Task("Run-Integration-Tests")	
+	.IsDependentOn("Publish-WebApplication1.Api")
+	.Does(() => 
+{
+     var settings = new DotNetCoreTestSettings
+     {
+         Configuration = configuration,
+		 NoBuild = true
+     };
+
+     Information("IntegrationTests");
+     var projectFiles = GetFiles("./**/IntegrationTests.csproj");	 
+     foreach(var file in projectFiles)
+     {		 
+         DotNetCoreTest(file.FullPath, settings);
+     }
+});
+
 #region Helper Methods
 
 public string GetVersionWithBuildNumber(string assemblyPath, string buildNumber)
@@ -149,8 +146,6 @@ public string GetVersionWithBuildNumber(string assemblyPath, string buildNumber)
 //////////////////////////////////////////////////////////////////////
 Task("Default")
 	.IsDependentOn("Run-Integration-Tests")
-	//.IsDependentOn("Run-Unit-Tests")
-	//.IsDependentOn("Publish-WebApplication1.Api")	
 	.Does(() =>
 {
 	
