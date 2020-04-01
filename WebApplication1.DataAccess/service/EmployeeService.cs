@@ -10,6 +10,7 @@ namespace WebApplication1.Data.service
         string GetNameById(int id);
         int Insert(string name);
         int TestTransaction(string name);
+        int GetByName(string name);
     }
 
     public class EmployeeService : IEmployeeService
@@ -19,6 +20,12 @@ namespace WebApplication1.Data.service
         public EmployeeService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+
+        public int GetByName(string name)
+        {
+            var result = _unitOfWork.EmployeeRepository.GetByName(name);
+            return result.Id;
         }
 
         public string GetNameById(int id)

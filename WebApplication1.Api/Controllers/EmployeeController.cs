@@ -20,6 +20,19 @@ namespace WebApplication1.Api.Controllers
         }
 
         /// <summary>
+        /// Get employee id by name
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("GetIdByName/{name}", Name = "GetIdByName")]
+        public ActionResult<int> GetEmployeeId(string name)
+        {
+            var result = _service.GetByName(name);
+
+            return Ok(new { Id = result });
+        }
+
+        /// <summary>
         /// Get employee name by id
         /// </summary>
         /// <param name="id"></param>

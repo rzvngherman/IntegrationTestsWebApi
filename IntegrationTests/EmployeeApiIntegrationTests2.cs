@@ -10,14 +10,39 @@ using Xunit;
 
 namespace IntegrationTests._2
 {
-    public class EmployeeApiIntegrationTests2
+    public class EmployeeApiIntegrationTests2 : IDisposable
     {
         protected HttpClient _client;
+        protected WebApplication1.Data.dataaccess.SomeDbContext _context;
 
         public EmployeeApiIntegrationTests2()
         {
-            var helper = new IntegrationTestHelper();
+            var helper = new IntegrationTestHelper(true);
             _client = helper.Client;
+            _context = helper.Context;
+        }
+
+        // http://localhost:63161/api/values/employee/GetIdByName/name02
+        [Fact]
+        public async Task GetIdByName_WhenNameExists_ReturnsCorrectResult()
+        {
+            //Arrange
+            var expectedId = 2;
+            var employeeName = "name02";
+
+            //Act
+            var response = await _client.GetAsync($"api/employee/GetIdByName/{employeeName}");
+
+            //Assert
+            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            var contentResponse = await response.Content.ReadAsStringAsync();
+            contentResponse.Should().Be("{\"id\":" + expectedId + "}");
+        }
+
+        public void Dispose()
+        {
+            _context.Database.EnsureDeleted();
         }
 
         //// http://localhost:63161/api/values/employee/1
@@ -37,7 +62,6 @@ namespace IntegrationTests._2
         //    var contentResponse = await response.Content.ReadAsStringAsync();
         //    contentResponse.Should().Be("{\"name\":\"" + expectedemployeeName + "\"}");
         //}
-
         //[Fact]
         //public async Task InsertEmployee_WhenEmployeeNameNotExists_ReturnsCreatedResult()
         //{

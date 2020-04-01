@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,8 +14,13 @@ namespace IntegrationTests
         public HttpClient Client { get; private set; }
         public EnvironmentConstants EnvironmentConstant { get; private set; }
 
-        public IntegrationTestHelper()
+        private bool _useDatabaseSeed;
+        public WebApplication1.Data.dataaccess.SomeDbContext Context { get; private set; }
+
+        public IntegrationTestHelper(bool useDatabaseSeed = false)
         {
+            _useDatabaseSeed = useDatabaseSeed;
+
             var builder = new ConfigurationBuilder()
                            .SetBasePath(Directory.GetCurrentDirectory())
                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
@@ -54,6 +60,26 @@ namespace IntegrationTests
                 .UseStartup<T>();
             var server = new Microsoft.AspNetCore.TestHost.TestServer(builder);
             Client = server.CreateClient();
+
+            if (_useDatabaseSeed)
+            {
+                var host = server.Host;
+                SeedData(host);
+            }
+        }
+
+        private void SeedData(IWebHost host)
+        {
+            var services = host.Services;
+            var catalogContext = services.GetRequiredService<WebApplication1.Data.dataaccess.SomeDbContext>();
+
+            Console.WriteLine("deleting...");
+            catalogContext.Database.EnsureDeleted();
+            //catalogContext.Database.Migrate();
+            Context = catalogContext;
+            catalogContext.Database.EnsureCreated();
+            TestDbData.CreateData(catalogContext);
+            catalogContext.SaveChanges();
         }
     }
 
