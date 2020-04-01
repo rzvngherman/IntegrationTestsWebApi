@@ -15,15 +15,15 @@ namespace WebApplication1.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "local api.WebApplication1.Api value1", "local api.WebApplication1.Api value2" };
+            return new string[] { "(local) api.WebApplication1.Api value1", "(local) api.WebApplication1.Api value2" };
         }
-        
-        //// GET api/values/5
-        //[HttpGet("{id}")]
-        //public ActionResult<string> Get(int id)
-        //{
-        //    return "value";
-        //}
+
+        // GET api/values/5
+        [HttpGet("{id}")]
+        public ActionResult<string> Get(int id)
+        {
+            return $"(local) value for {id}";
+        }
 
         //// POST api/values
         //[Route("insert_value")]

@@ -13,34 +13,13 @@ namespace IntegrationTests._2
     public class EmployeeApiIntegrationTests2
     {
         protected HttpClient _client;
-        protected string GET_API_VALUES_CONSTANT;
 
         public EmployeeApiIntegrationTests2()
         {
             var helper = new IntegrationTestHelper();
-            GET_API_VALUES_CONSTANT = helper.EnvironmentConstant.GET_API_VALUES_CONSTANT;
             _client = helper.Client;
         }
-
-        // http://localhost/integration_api.com/api/Values
-        [Fact]
-        public async Task GetAsync_apiValues()
-        {
-            //Act
-            var response = await _client.GetAsync("api/Values");
-            var contentResponse = await response.Content.ReadAsStringAsync();
-
-            response.EnsureSuccessStatusCode();
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-
-            ////remote:
-            //contentResponse.Should().Be("[\"WebApplication1.Api value1\",\"WebApplication1.Api value2\"]");
-
-            //local:
-            //contentResponse.Should().Be("[\"local api.WebApplication1.Api value1\",\"local api.WebApplication1.Api value2\"]");            
-            contentResponse.Should().Be(GET_API_VALUES_CONSTANT);
-        }
-
+       
         //// http://localhost:63161/api/values/employee/1
         //[Fact]
         //public async Task GetNameById_WhenNameExists_ReturnsCorrectResult()

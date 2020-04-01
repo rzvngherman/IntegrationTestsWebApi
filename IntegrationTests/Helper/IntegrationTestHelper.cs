@@ -59,14 +59,20 @@ namespace IntegrationTests
 
     public sealed class EnvironmentConstants
     {
-        public static readonly EnvironmentConstants Remote = new EnvironmentConstants("[\"WebApplication1.Api value1\",\"WebApplication1.Api value2\"]");
-        public static readonly EnvironmentConstants Local = new EnvironmentConstants("[\"local api.WebApplication1.Api value1\",\"local api.WebApplication1.Api value2\"]");
+        public static readonly EnvironmentConstants Remote = new EnvironmentConstants(
+            "[\"(remote) api.WebApplication1.Api value1\",\"(remote) api.WebApplication1.Api value2\"]"
+            , "(remote) value for ");
+        public static readonly EnvironmentConstants Local = new EnvironmentConstants(
+            "[\"(local) api.WebApplication1.Api value1\",\"(local) api.WebApplication1.Api value2\"]"
+            , "(local) value for ");
 
-        private EnvironmentConstants(string getApiValuesConstant)
+        private EnvironmentConstants(string getApiValuesConstant, string getApiValuesById)
         {
-            GET_API_VALUES_CONSTANT = getApiValuesConstant;
+            GET_API_VALUES = getApiValuesConstant;
+            GET_API_VALUES_BY_ID = getApiValuesById;
         }
 
-        public string GET_API_VALUES_CONSTANT { get; private set; }
+        public string GET_API_VALUES { get; private set; }
+        public string GET_API_VALUES_BY_ID { get; private set; }
     }
 }
