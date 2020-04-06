@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApplication1.Data;
-using WebApplication1.Data.service;
+using WebApplication1.Api.Models;
+using WebApplication1.Service.Interfaces;
+using WebApplication1.Service.Model;
 
 namespace WebApplication1.Api.Controllers
 {
@@ -13,10 +15,12 @@ namespace WebApplication1.Api.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _service;
+        private readonly IMapper _mapper;
 
-        public EmployeeController(IEmployeeService service)
+        public EmployeeController(IEmployeeService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -54,17 +58,22 @@ namespace WebApplication1.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<string> CreateEmployee([FromBody] Employee value)
+        public ActionResult<string> CreateEmployee([FromBody] EmployeeInsertDTO employee)
         {
-            var employeeId = _service.Insert(value.Name);
+            var newEmployee = _mapper.Map<EmployeeInsertModel>(employee);
+            var employeeId = _service.Insert(newEmployee);
 
             var uri = Url.Link("GetNameById",
                 new
                 {
                     id = employeeId,
                 });
-            var abc = "gugu" + value.Name;
-            return Created(uri, new { abc });
+            return Created(uri, new { employee.Name });
         }
+    }
+
+    public class GetEmployeeModel
+    {
+        public string Name { get; set; }
     }
 }

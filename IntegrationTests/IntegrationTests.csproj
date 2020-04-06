@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebApplication1.Api\WebApplication1.Api.csproj" />
+    <ProjectReference Include="..\WebApplication1.Tests.Core\WebApplication1.Tests.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

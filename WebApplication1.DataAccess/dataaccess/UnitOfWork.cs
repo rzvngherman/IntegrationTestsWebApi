@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using WebApplication1.Data.domain;
+using WebApplication1.Data;
+using WebApplication1.DataAccess.Repository;
+using WebApplication1.Domain.Repository;
 
 namespace WebApplication1.Data.dataaccess
 {

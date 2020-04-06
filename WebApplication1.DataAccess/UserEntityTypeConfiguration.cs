@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using WebApplication1.Data.domain;
+using WebApplication1.Domain;
 
 namespace WebApplication1.DataAccess
 {
@@ -14,7 +14,9 @@ namespace WebApplication1.DataAccess
             builder.HasKey(u => u.Id);
 
             builder.Property(u => u.Name).HasColumnName("Name")
-                .IsRequired();            
+                .IsRequired();
+
+            builder.Property(e => e.Age).HasColumnName("age");
         }
     }
 

@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using WebApplication1.Data.dataaccess;
-using WebApplication1.Data.domain;
-using WebApplication1.Data.service;
+using WebApplication1.Domain.Repository;
+using WebApplication1.Service;
+using WebApplication1.Service.Interfaces;
+using WebApplication1.Service.Mapper;
 
 namespace WebApplication1.Api
 {
@@ -36,6 +33,9 @@ namespace WebApplication1.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var mapper = ConfigureMapper.CreateMapper(new Mapper.WebApplication1Profile());
+            services.AddSingleton(mapper);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
             services.AddScoped<IEmployeeService, EmployeeService>();

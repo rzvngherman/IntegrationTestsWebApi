@@ -8,8 +8,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication1.Api.Models.Attachment;
 using WebApplication1.Data.dataaccess;
-using WebApplication1.Data.domain;
 
 namespace WebApplication1.Api.Controllers
 {
@@ -58,23 +58,13 @@ namespace WebApplication1.Api.Controllers
         [HttpPost("UploadDatabaseFileFromPath")]
         public async Task<IActionResult> UploadFileFromPath([FromBody] int id)
         {
-            var result = await GetFromPathById(id);
-            var okResult = (result as OkObjectResult).Value as byte[];
-            var attachment = new Attachment(okResult);
-            _context.Attachments.Add(attachment);
-            await _context.SaveChangesAsync();
-            return Created("", new { id = attachment.Id });
-        }
-
-
-
-
-
-
-
-        public class AttachmentViewModel
-        {
-            public string File { get; set; }
+            //var result = await GetFromPathById(id);
+            //var okResult = (result as OkObjectResult).Value as byte[];
+            //var attachment = new Attachment(okResult);
+            //_context.Attachments.Add(attachment);
+            //await _context.SaveChangesAsync();
+            //return Created("", new { id = attachment.Id });
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -87,28 +77,30 @@ namespace WebApplication1.Api.Controllers
         [HttpGet("ImageFromSql")]
         public async Task<IActionResult> GetFromSqlById(int imageId)
         {
-            var image = await _context
-                 .Set<Attachment>()
-                 .FirstOrDefaultAsync(a=>a.Id == imageId);
+            //var image = await _context
+            //     .Set<Attachment>()
+            //     .FirstOrDefaultAsync(a=>a.Id == imageId);
 
-            if (image == null)
-            {
-                throw new Exception("no image was found in database");
-            }
+            //if (image == null)
+            //{
+            //    throw new Exception("no image was found in database");
+            //}
 
-            var base64Picture = Convert.ToBase64String(image.ImageContent);
-            return Ok(base64Picture);
+            //var base64Picture = Convert.ToBase64String(image.ImageContent);
+            //return Ok(base64Picture);
+            throw new NotImplementedException();
         }
 
         [HttpPost("UploadDatabaseFileFromInput")]
-        public async Task<ActionResult<Attachment>> PostAttachment([FromBody]AttachmentViewModel attachmentvm)
+        public async Task<ActionResult<AttachmentInsertResponseDto>> PostAttachment([FromBody]AttachmentInsertRequestDto attachmentvm)
         {
-            //string path = Path.Combine(_env.WebRootPath,"images", attachmentvm.FileName);
-            byte[] bytes = Convert.FromBase64String(attachmentvm.File);
-            var attachment = new Attachment(bytes);
-            _context.Attachments.Add(attachment);
-            await _context.SaveChangesAsync();
-            return Created("", new { id = attachment.Id });
+            ////string path = Path.Combine(_env.WebRootPath,"images", attachmentvm.FileName);
+            //byte[] bytes = Convert.FromBase64String(attachmentvm.File);
+            //var attachment = new Attachment(bytes);
+            //_context.Attachments.Add(attachment);
+            //await _context.SaveChangesAsync();
+            //return Created("", new { id = attachment.Id });
+            throw new NotImplementedException();
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
+using WebApplication1.Tests.Core;
 
 namespace IntegrationTests
 {
@@ -26,7 +27,7 @@ namespace IntegrationTests
                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             IConfigurationRoot configuration = builder.Build();
 
-            //var a1 = configuration.GetConnectionString("smap_IT_database");
+            var a1 = configuration.GetConnectionString("smap_IT_database");
             bool.TryParse(configuration.GetSection("AppSettings:UseRemote").Value, out bool useRemote);
             if (!useRemote)
             {

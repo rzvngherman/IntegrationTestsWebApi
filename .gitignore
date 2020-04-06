@@ -15,3 +15,9 @@ WebApplication1.Tests/obj/
 WebApplication.UnitTests/bin/
 WebApplication.UnitTests/obj/
 published/
+WebApplication1.Domain/bin/
+WebApplication1.Domain/obj/
+WebApplication1.Service/bin/
+WebApplication1.Service/obj/
+WebApplication1.Tests.Core/bin/
+WebApplication1.Tests.Core/obj/
