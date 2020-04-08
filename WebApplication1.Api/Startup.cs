@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 using WebApplication1.Data.dataaccess;
 using WebApplication1.Domain.Repository;
 using WebApplication1.Service;
@@ -34,14 +35,13 @@ namespace WebApplication1.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new Info { Title = "Game Progress API", Version = "v1" });
-            //    c.IncludeXmlComments(SwaggerConfig.GetControllersXmlCommentsPath());
 
-            //    AddAuthenticationParameter(c);
-            //});
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Game Progress API", Version = "v1" });
+                c.IncludeXmlComments(SwaggerConfig.GetControllersXmlCommentsPath());
+                //AddAuthenticationParameter(c);
+            });
 
             AddDbContext(services);
 
@@ -57,6 +57,15 @@ namespace WebApplication1.Api
             }
 
             app.UseMvc();
+
+            app.UseSwagger(c =>
+            {
+                c.PreSerializeFilters.Add((swaggerDoc, httpReq) => swaggerDoc.Host = httpReq.Host.Value);
+            });
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("v1/swagger.json", "Web Application1 API");
+            });
         }
 
         private void MapInterfacesAndClasses(IServiceCollection services)
