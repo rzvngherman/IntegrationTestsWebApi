@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -38,14 +39,25 @@ namespace WebApplication1.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Game Progress API", Version = "v1" });
+                c.SwaggerDoc("v1", AddInfoData());                
                 c.IncludeXmlComments(SwaggerConfig.GetControllersXmlCommentsPath());
-                //AddAuthenticationParameter(c);
+                //AddAuthenticationParameter(c);                
             });
 
             AddDbContext(services);
 
             MapInterfacesAndClasses(services);
+        }
+
+        private Info AddInfoData()
+        {
+            var info = new Info
+            {
+                Title = "Game Progress API",
+                Version = "v1",
+            };
+            info.Extensions.Add("x-logo", "http://integration_api.com/images/logo01.png");
+            return info;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +72,11 @@ namespace WebApplication1.Api
 
             app.UseSwagger(c =>
             {
-                c.PreSerializeFilters.Add((swaggerDoc, httpReq) => swaggerDoc.Host = httpReq.Host.Value);
+                c.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
+                {
+                    swaggerDoc.Host = httpReq.Host.Value;
+                    swaggerDoc.Extensions.Add("x-logo2", "http://integration_api.com/images/logo02.png");
+                });
             });
             app.UseSwaggerUI(c =>
             {
