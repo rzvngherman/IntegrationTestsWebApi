@@ -19,10 +19,10 @@ namespace WebApplication1.Api.Controllers
         private Dictionary<int, string> _materialImages;
         private IConfiguration _configuration;
         //public static IHostingEnvironment _environment;
-        private IHostingEnvironment _environment;
+        private IWebHostEnvironment _environment;
         private SomeDbContext _context;
 
-        public ImageController(IConfiguration configuration, IHostingEnvironment environment, SomeDbContext context)
+        public ImageController(IConfiguration configuration, IWebHostEnvironment environment, SomeDbContext context)
         {
             _configuration = configuration;
             _environment = environment;
