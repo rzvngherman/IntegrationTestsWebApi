@@ -33,32 +33,19 @@ namespace WebApplication1.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var mapper = ConfigureMapper.CreateMapper(new Mapper.WebApplication1Profile());
-            services.AddSingleton(mapper);
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
-            services.AddScoped<IEmployeeService, EmployeeService>();
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new Info { Title = "Game Progress API", Version = "v1" });
+            //    c.IncludeXmlComments(SwaggerConfig.GetControllersXmlCommentsPath());
 
-            var connection = Configuration.GetConnectionString("smap_IT_database");
-            services.AddTransient<SomeDbContext>(provider =>
-                {
-                    var builder = new DbContextOptionsBuilder<SomeDbContext>();
-                    builder.UseSqlServer(connection,
-                        sqlOptions =>
-                        {
-                            sqlOptions.EnableRetryOnFailure(5,
-                                        TimeSpan.FromSeconds(15),
-                                        errorNumbersToAdd: null);
+            //    AddAuthenticationParameter(c);
+            //});
 
-                        }).EnableSensitiveDataLogging();
-                    return new SomeDbContext(builder.Options);
-                }
-               );
+            AddDbContext(services);
 
-            services.AddScoped<IUnitOfWork>(s => new UnitOfWork(s.GetService<SomeDbContext>()
-                ));
-
+            MapInterfacesAndClasses(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +57,34 @@ namespace WebApplication1.Api
             }
 
             app.UseMvc();
+        }
+
+        private void MapInterfacesAndClasses(IServiceCollection services)
+        {
+            var mapper = ConfigureMapper.CreateMapper(new Mapper.WebApplication1Profile());
+            services.AddSingleton(mapper);
+
+            services.AddScoped<IEmployeeService, EmployeeService>();
+
+            services.AddScoped<IUnitOfWork>(s => new UnitOfWork(s.GetService<SomeDbContext>()));
+        }
+
+        private void AddDbContext(IServiceCollection services)
+        {
+            var connection = Configuration.GetConnectionString("smap_IT_database");
+            services.AddTransient<SomeDbContext>(provider =>
+            {
+                var builder = new DbContextOptionsBuilder<SomeDbContext>();
+                builder.UseSqlServer(connection,
+                    sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(5,
+                                    TimeSpan.FromSeconds(15),
+                                    errorNumbersToAdd: null);
+
+                    }).EnableSensitiveDataLogging();
+                return new SomeDbContext(builder.Options);
+            });
         }
     }
 }
