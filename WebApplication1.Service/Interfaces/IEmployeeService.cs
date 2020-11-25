@@ -2,6 +2,10 @@
 
 namespace WebApplication1.Service.Interfaces
 {
+    /// <summary>
+    /// Old.
+    /// Should use Query / Commands (CQRS)
+    /// </summary>
     public interface IEmployeeService
     {
         string GetNameById(int id);

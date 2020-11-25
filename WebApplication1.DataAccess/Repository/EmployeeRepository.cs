@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using WebApplication1.Domain;
 using WebApplication1.Domain.Repository;
 
@@ -42,5 +44,24 @@ namespace WebApplication1.DataAccess.Repository
                 _context
                     .Set<Employee>();
         }
-    }
+
+		public async Task<Employee> GetByNameAsync(string name)
+		{
+            var result = await GetQuery()
+                                .FirstOrDefaultAsync(s => s.Name == name);
+            if (result == null)
+            {
+                throw new Exception("No employee found by this name");
+            }
+
+            return result;
+        }
+
+		public async Task<Employee> InsertAsync(Employee employee)
+		{
+            _context.Add(employee);
+            await _context.SaveChangesAsync();
+            return employee;
+        }
+	}
 }

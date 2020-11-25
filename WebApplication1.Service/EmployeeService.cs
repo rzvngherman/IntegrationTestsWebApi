@@ -8,6 +8,10 @@ using WebApplication1.Service.Model;
 
 namespace WebApplication1.Service
 {
+    /// <summary>
+    /// Old.
+    /// Should use Query / Commands (CQRS)
+    /// </summary>
     public class EmployeeService : IEmployeeService
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -22,6 +26,8 @@ namespace WebApplication1.Service
         public int GetByName(string name)
         {
             var result = _unitOfWork.EmployeeRepository.GetByName(name);
+            //can be null
+
             return result.Id;
         }
 

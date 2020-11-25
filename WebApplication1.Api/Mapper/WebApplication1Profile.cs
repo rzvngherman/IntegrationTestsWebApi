@@ -14,6 +14,12 @@ namespace WebApplication1.Api.Mapper
         public WebApplication1Profile()
         {
             CreateMap<EmployeeInsertDTO, EmployeeInsertModel>().ConvertUsing<EmployeeInsertDTOToEmployeeInsertModelConverter>();
+            //CreateMap<EmployeeInsertDTO, EmployeeInsertModel>()
+            //.ForMember(e => e.EmployeeName, option => option.MapFrom(src => src.Name))
+            //.ReverseMap();
+
+            //CreateMap<EmployeeInsertDTO, EmployeeInsertModel>()
+            //.ForMember(e => e.EmployeeName, option => option.MapFrom()
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +19,7 @@ using WebApplication1.Domain.Repository;
 using WebApplication1.Service;
 using WebApplication1.Service.Interfaces;
 using WebApplication1.Service.Mapper;
+using WebApplication1.Service.Query;
 
 namespace WebApplication1.Api
 {
@@ -43,12 +46,15 @@ namespace WebApplication1.Api
             services.AddMvc(opt => opt.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", AddInfoData());                
-            //    c.IncludeXmlComments(SwaggerConfig.GetControllersXmlCommentsPath());
-            //    //AddAuthenticationParameter(c);                
-            //});
+            services
+                .AddMediatR(typeof(GetEmployeeByNameQueryHandler).GetTypeInfo().Assembly);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", AddInfoData());
+                c.IncludeXmlComments(SwaggerConfig.GetControllersXmlCommentsPath());
+                //AddAuthenticationParameter(c);                
+            });
 
             AddDbContext(services);
 
@@ -68,18 +74,19 @@ namespace WebApplication1.Api
 
             app.UseMvc();
 
-            //app.UseSwagger(c =>
-            //{
-            //    c.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
-            //    {
-            //        swaggerDoc.Servers.Add(new OpenApiServer { Url = httpReq.Host.Value });
-            //        //swaggerDoc.Extensions.Add(new KeyValuePair<string, Microsoft.OpenApi.Interfaces.IOpenApiExtension>("x-logo2", new OpenApiString("http://integration_api.com/images/logo02.png")));
-            //});
-            //});
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("v1/swagger.json", "Web Application1 API");
-            //});
+            app.UseSwagger(c =>
+            {
+                c.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
+                {
+                    swaggerDoc.Servers = new List<OpenApiServer> { new OpenApiServer { Url = $"{httpReq.Scheme}://{httpReq.Host.Value}" } };
+                    swaggerDoc.Extensions.Add(new KeyValuePair<string, Microsoft.OpenApi.Interfaces.IOpenApiExtension>("x-logo2", new OpenApiString("http://integration_api.com/images/logo02.png")));
+                });
+            });
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("v1/swagger.json", "Web Application1 API");
+            });
         }
 
         private void MapInterfacesAndClasses(IServiceCollection services)
@@ -110,6 +117,17 @@ namespace WebApplication1.Api
             });
         }
 
+        private OpenApiInfo AddInfoData()
+        {
+            var info = new OpenApiInfo
+            {
+                Title = "Game Progress API",
+                Version = "v1",
+            };
+            info.Extensions.Add(new KeyValuePair<string, Microsoft.OpenApi.Interfaces.IOpenApiExtension>("x-logo", new OpenApiString("http://integration_api.com/images/logo01.png")));
+            return info;
+        }
+
         private void AddAuthenticationParameter(SwaggerGenOptions c)
         {
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -132,17 +150,6 @@ namespace WebApplication1.Api
             });
 
             //c.OperationFilter<AddHeaderParameter>();
-        }
-
-        private OpenApiInfo AddInfoData()
-        {
-            var info = new OpenApiInfo
-            {
-                Title = "Game Progress API",
-                Version = "v1",
-            };
-            //info.Extensions.Add(new KeyValuePair<string, Microsoft.OpenApi.Interfaces.IOpenApiExtension>("x-logo", new OpenApiString("http://integration_api.com/images/logo01.png")));
-            return info;
         }
     }
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebApplication1.Api</name>
+    </assembly>
+    <members>
+        <member name="M:WebApplication1.Api.Controllers.EmployeeController.GetEmployeeId(System.String)">
+            <summary>
+            Get employee id by name
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Api.Controllers.EmployeeController.GetEmployeeName(System.Int32)">
+            <summary>
+            Get employee name by id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Api.Controllers.EmployeeController.CreateEmployee(WebApplication1.Api.Models.EmployeeInsertDTO)">
+            <summary>
+            Insert employee
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Api.Controllers.EmployeeCQRSController.GetByName(System.String)">
+            <summary>
+            Get employee by name
+            </summary>        
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Api.Controllers.EmployeeCQRSController.CreateEmployee(WebApplication1.Api.Models.EmployeeInsertDTO)">
+            <summary>
+            Insert employee
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Api.Controllers.ImageController.GetFromPathById(System.Int32)">
+            <summary>
+            1) select top 100 * from MaterialImages
+            2) id	image_id	image_url
+                1	1	        /material/img_abc.jpg
+            </summary>
+            <param name="imageId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Api.Controllers.ImageController.GetFromSqlById(System.Int32)">
+            <summary>
+            1) select top 100 * from MaterialImages
+            2) id	image_id	image_url
+                1	1	        /material/img_abc.jpg
+            </summary>
+            <param name="imageId"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
